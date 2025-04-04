@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
-  base: "/cyber-tool-hub/", // Update this to match your repository name
+  base: "/cyber-tool-hub/", // Ensure this matches your repository name exactly
   plugins: [
     react(),
     mode === 'development' &&
