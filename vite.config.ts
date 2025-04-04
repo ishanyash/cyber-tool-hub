@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
-  base: "/", // This will be the base path for GitHub Pages
+  base: "/cyber-tool-hub/", // Update this to match your repository name
   plugins: [
     react(),
     mode === 'development' &&
