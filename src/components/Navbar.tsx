@@ -1,8 +1,9 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Search, Menu, User, ChevronDown } from "lucide-react";
+import { Search, Menu, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
+import NavbarAuthButtons from './NavbarAuthButtons';
 
 const Navbar = () => {
   return (
@@ -28,9 +29,9 @@ const Navbar = () => {
               More <ChevronDown className="h-4 w-4" />
             </button>
             <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-cyber-dark-blue border border-cyber-neon-blue hidden group-hover:block">
-              <Link to="/categories" className="block px-4 py-2 hover:bg-cyber-grid text-sm">Categories</Link>
-              <Link to="/submit-tool" className="block px-4 py-2 hover:bg-cyber-grid text-sm">Submit Tool</Link>
-              <Link to="/sponsors" className="block px-4 py-2 hover:bg-cyber-grid text-sm">Sponsors</Link>
+              <Link to="/tools" className="block px-4 py-2 hover:bg-cyber-grid text-sm">Categories</Link>
+              <Link to="/add-tool" className="block px-4 py-2 hover:bg-cyber-grid text-sm">Submit Tool</Link>
+              <Link to="/about" className="block px-4 py-2 hover:bg-cyber-grid text-sm">Sponsors</Link>
             </div>
           </div>
         </nav>
@@ -39,9 +40,7 @@ const Navbar = () => {
           <Button variant="outline" size="icon" className="border-cyber-neon-blue text-cyber-neon-blue">
             <Search className="h-5 w-5" />
           </Button>
-          <Button className="hidden md:flex bg-gradient-blue text-white hover:bg-none hover:bg-cyber-neon-blue hover:text-cyber-dark">
-            <User className="mr-2 h-4 w-4" /> Sign In
-          </Button>
+          <NavbarAuthButtons />
           <Button variant="outline" size="icon" className="md:hidden border-cyber-neon-blue text-cyber-neon-blue">
             <Menu className="h-5 w-5" />
           </Button>

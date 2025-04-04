@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, Users } from 'lucide-react';
 
@@ -12,9 +13,11 @@ const WebinarSection = () => {
             <h2 className="text-3xl font-bold cyber-text">Featured Webinar</h2>
             <p className="text-gray-400 mt-2">Watch and learn from AI experts in our cyberpunk studio</p>
           </div>
-          <Button className="mt-4 md:mt-0 bg-transparent border border-cyber-neon-pink text-cyber-neon-pink hover:bg-cyber-neon-pink hover:text-cyber-dark">
-            View All Webinars
-          </Button>
+          <Link to="/webinars">
+            <Button className="mt-4 md:mt-0 bg-transparent border border-cyber-neon-pink text-cyber-neon-pink hover:bg-cyber-neon-pink hover:text-cyber-dark">
+              View All Webinars
+            </Button>
+          </Link>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

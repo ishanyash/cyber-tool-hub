@@ -66,10 +66,22 @@ export const getFeaturedTools = async (): Promise<Tool[]> => {
 };
 
 export const getToolsByCategory = async (category: string): Promise<Tool[]> => {
+  // Convert slug format to display format if needed
+  let categoryName = category;
+  
+  // Handle converting slugs to proper category names
+  if (category === 'text-to-image') categoryName = 'Text to Image';
+  if (category === 'voice-audio') categoryName = 'Voice & Audio';
+  if (category === '3d-architecture') categoryName = '3D & Architecture';
+  if (category === 'ai-research') categoryName = 'AI Research';
+  if (category === 'document-analysis') categoryName = 'Document Analysis';
+  if (category === 'music-generation') categoryName = 'Music Generation';
+  if (category === 'writing-content') categoryName = 'Writing & Content';
+  
   const { data, error } = await supabase
     .from('tools')
     .select('*')
-    .eq('category', category);
+    .eq('category', categoryName);
   
   if (error) {
     console.error(`Error fetching tools for category ${category}:`, error);

@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from 'lucide-react';
@@ -37,15 +37,21 @@ const HeroSection = () => {
           </div>
           
           <div className="flex flex-wrap justify-center gap-4 mt-8">
-            <Button className="bg-transparent border border-cyber-neon-blue text-cyber-neon-blue hover:bg-cyber-neon-blue hover:text-cyber-dark">
-              Popular Tools
-            </Button>
-            <Button className="bg-transparent border border-cyber-neon-pink text-cyber-neon-pink hover:bg-cyber-neon-pink hover:text-cyber-dark">
-              Latest Tools
-            </Button>
-            <Button className="bg-transparent border border-cyber-neon-purple text-cyber-neon-purple hover:bg-cyber-neon-purple hover:text-white">
-              Submit a Tool
-            </Button>
+            <Link to="/tools">
+              <Button className="bg-transparent border border-cyber-neon-blue text-cyber-neon-blue hover:bg-cyber-neon-blue hover:text-cyber-dark">
+                Popular Tools
+              </Button>
+            </Link>
+            <Link to="/tools">
+              <Button className="bg-transparent border border-cyber-neon-pink text-cyber-neon-pink hover:bg-cyber-neon-pink hover:text-cyber-dark">
+                Latest Tools
+              </Button>
+            </Link>
+            <Link to="/add-tool">
+              <Button className="bg-transparent border border-cyber-neon-purple text-cyber-neon-purple hover:bg-cyber-neon-purple hover:text-white">
+                Submit a Tool
+              </Button>
+            </Link>
           </div>
           
           <div className="mt-12 flex flex-wrap justify-center gap-6">

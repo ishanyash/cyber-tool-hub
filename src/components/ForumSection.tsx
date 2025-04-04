@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Users, ArrowRight, Sparkles, Star, TrendingUp } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
@@ -36,7 +37,7 @@ const MOCK_FORUMS = [
 
 const ForumCard = ({ forum }) => {
   return (
-    <div className="cyber-card p-5 hover:border-cyber-neon-pink transition-colors duration-300 group">
+    <Link to={`/forum/${forum.id}`} className="cyber-card p-5 hover:border-cyber-neon-pink transition-colors duration-300 group">
       <div className="flex items-start">
         <div className="bg-cyber-dark-blue p-3 rounded-lg border border-cyber-neon-blue/30 mr-4">
           <forum.icon className="h-6 w-6 text-cyber-neon-blue" />
@@ -68,11 +69,9 @@ const ForumCard = ({ forum }) => {
           </div>
         </div>
         
-        <Button variant="ghost" className="text-cyber-neon-blue hover:text-white">
-          <ArrowRight className="h-5 w-5" />
-        </Button>
+        <ArrowRight className="h-5 w-5 text-cyber-neon-blue group-hover:text-cyber-neon-pink transition-colors" />
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -86,9 +85,11 @@ const ForumSection = () => {
             <h2 className="text-3xl font-bold cyber-text">AI Tool Forums</h2>
             <p className="text-gray-400 mt-2">Join discussions about the latest AI tools and technologies</p>
           </div>
-          <Button className="bg-gradient-blue text-white hover:bg-none hover:bg-cyber-neon-blue hover:text-cyber-dark">
-            <Users className="mr-2 h-4 w-4" /> Join Community
-          </Button>
+          <Link to="/forum">
+            <Button className="bg-gradient-blue text-white hover:bg-none hover:bg-cyber-neon-blue hover:text-cyber-dark">
+              <Users className="mr-2 h-4 w-4" /> Join Community
+            </Button>
+          </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -102,27 +103,27 @@ const ForumSection = () => {
             <h3 className="text-xl font-bold text-cyber-neon-blue mb-4">Trending Topics</h3>
             <ul className="space-y-4">
               <li className="border-b border-cyber-neon-blue/20 pb-3">
-                <a href="#" className="text-gray-200 hover:text-cyber-neon-blue transition-colors">
+                <Link to="/forum" className="text-gray-200 hover:text-cyber-neon-blue transition-colors">
                   What's your favorite AI image generator and why?
-                </a>
+                </Link>
                 <div className="flex items-center mt-2 text-sm text-gray-500">
                   <span className="mr-4">Posted by @neon_dreamer</span>
                   <span>32 replies</span>
                 </div>
               </li>
               <li className="border-b border-cyber-neon-blue/20 pb-3">
-                <a href="#" className="text-gray-200 hover:text-cyber-neon-blue transition-colors">
+                <Link to="/forum" className="text-gray-200 hover:text-cyber-neon-blue transition-colors">
                   Are AI code generators replacing programmers?
-                </a>
+                </Link>
                 <div className="flex items-center mt-2 text-sm text-gray-500">
                   <span className="mr-4">Posted by @digital_phantom</span>
                   <span>78 replies</span>
                 </div>
               </li>
               <li>
-                <a href="#" className="text-gray-200 hover:text-cyber-neon-blue transition-colors">
+                <Link to="/forum" className="text-gray-200 hover:text-cyber-neon-blue transition-colors">
                   New Midjourney update: First impressions thread
-                </a>
+                </Link>
                 <div className="flex items-center mt-2 text-sm text-gray-500">
                   <span className="mr-4">Posted by @virtual_architect</span>
                   <span>56 replies</span>
@@ -135,27 +136,27 @@ const ForumSection = () => {
             <h3 className="text-xl font-bold text-cyber-neon-pink mb-4">Latest Discussions</h3>
             <ul className="space-y-4">
               <li className="border-b border-cyber-neon-blue/20 pb-3">
-                <a href="#" className="text-gray-200 hover:text-cyber-neon-pink transition-colors">
+                <Link to="/forum" className="text-gray-200 hover:text-cyber-neon-pink transition-colors">
                   Best AI tools for video editing in 2025
-                </a>
+                </Link>
                 <div className="flex items-center mt-2 text-sm text-gray-500">
                   <span className="mr-4">2 hours ago</span>
                   <span>12 replies</span>
                 </div>
               </li>
               <li className="border-b border-cyber-neon-blue/20 pb-3">
-                <a href="#" className="text-gray-200 hover:text-cyber-neon-pink transition-colors">
+                <Link to="/forum" className="text-gray-200 hover:text-cyber-neon-pink transition-colors">
                   How to fine-tune GPT models for specialized tasks
-                </a>
+                </Link>
                 <div className="flex items-center mt-2 text-sm text-gray-500">
                   <span className="mr-4">5 hours ago</span>
                   <span>8 replies</span>
                 </div>
               </li>
               <li>
-                <a href="#" className="text-gray-200 hover:text-cyber-neon-pink transition-colors">
+                <Link to="/forum" className="text-gray-200 hover:text-cyber-neon-pink transition-colors">
                   Comparing AI image upscaling tools: results thread
-                </a>
+                </Link>
                 <div className="flex items-center mt-2 text-sm text-gray-500">
                   <span className="mr-4">Yesterday</span>
                   <span>24 replies</span>

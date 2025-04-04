@@ -4,11 +4,16 @@ import { useQuery } from '@tanstack/react-query';
 import ToolCard from './ToolCard';
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from 'lucide-react';
-import { getTools, getFeaturedTools, Tool } from '@/services/toolsService';
+import { getTools, getFeaturedTools, getToolsByCategory, Tool } from '@/services/toolsService';
 import { useToast } from '@/components/ui/use-toast';
 
-const ToolsGrid = () => {
-  const [filter, setFilter] = useState<'all' | 'featured' | 'new'>('all');
+interface ToolsGridProps {
+  initialFilter?: 'all' | 'featured' | 'new';
+  categoryFilter?: string | null;
+}
+
+const ToolsGrid: React.FC<ToolsGridProps> = ({ initialFilter = 'all', categoryFilter = null }) => {
+  const [filter, setFilter] = useState<'all' | 'featured' | 'new'>(initialFilter);
   const [displayCount, setDisplayCount] = useState(6);
   const { toast } = useToast();
   
@@ -18,8 +23,13 @@ const ToolsGrid = () => {
     isError, 
     error 
   } = useQuery({
-    queryKey: ['tools', filter],
-    queryFn: () => filter === 'featured' ? getFeaturedTools() : getTools(),
+    queryKey: ['tools', filter, categoryFilter],
+    queryFn: async () => {
+      if (categoryFilter) {
+        return getToolsByCategory(categoryFilter);
+      }
+      return filter === 'featured' ? getFeaturedTools() : getTools();
+    },
   });
   
   useEffect(() => {
@@ -56,15 +66,10 @@ const ToolsGrid = () => {
   const hasMore = tools ? displayTools.length < tools.length : false;
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-          <div>
-            <h2 className="text-3xl font-bold cyber-text">Popular AI Tools</h2>
-            <p className="text-gray-400 mt-2">Discover trending AI tools in our cyberpunk collection</p>
-          </div>
-          
-          <div className="flex gap-4 mt-6 md:mt-0">
+    <section className="py-4">
+      <div>
+        {!categoryFilter && (
+          <div className="flex gap-4 mb-8">
             <Button 
               variant="outline" 
               className={`border-cyber-neon-blue ${filter === 'all' ? 'bg-cyber-neon-blue/20 text-white' : 'text-cyber-neon-blue'}`}
@@ -87,7 +92,7 @@ const ToolsGrid = () => {
               New
             </Button>
           </div>
-        </div>
+        )}
         
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
