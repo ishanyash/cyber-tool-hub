@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
-  base: "/cyber-tool-hub/", // Ensure this matches your repository name exactly
+  base: "/",  // Changed from "/cyber-tool-hub/" to "/" for Vercel
   plugins: [
     react(),
     mode === 'development' &&
