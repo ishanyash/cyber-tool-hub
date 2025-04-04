@@ -1,44 +1,44 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext'
+import { ProtectedRoute } from './components/auth/ProtectedRoute'
+import { SignInForm } from './components/auth/SignInForm'
+import { SignUpForm } from './components/auth/SignUpForm'
+import { Dashboard } from './components/Dashboard'
+import { Navbar } from './components/Navbar'
+import { Home } from './components/Home'
+import { Forum } from './components/Forum'
+import { Webinars } from './components/Webinars'
+import { Sponsorship } from './components/Sponsorship'
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import Forum from "./pages/Forum";
-import Tools from "./pages/Tools";
-import ToolDetail from "./pages/ToolDetail";
-import Webinars from "./pages/Webinars";
-import About from "./pages/About";
-import NotFound from "./pages/NotFound";
-import { AuthProvider } from "./contexts/AuthContext";
-import Auth from "./pages/Auth";
-import AddTool from "./pages/AddTool";
-
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+function App() {
+  return (
     <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/forum" element={<Forum />} />
-            <Route path="/tools" element={<Tools />} />
-            <Route path="/tool/:id" element={<ToolDetail />} />
-            <Route path="/webinars" element={<Webinars />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/add-tool" element={<AddTool />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-900 text-white">
+          <Navbar />
+          <main className="container mx-auto px-4 py-8">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/signin" element={<SignInForm />} />
+              <Route path="/signup" element={<SignUpForm />} />
+              <Route 
+                path="/dashboard" 
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="/forum" element={<Forum />} />
+              <Route path="/webinars" element={<Webinars />} />
+              <Route path="/sponsorship" element={<Sponsorship />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+        </div>
+      </Router>
     </AuthProvider>
-  </QueryClientProvider>
-);
+  )
+}
 
-export default App;
+export default App

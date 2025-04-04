@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
+# Cyber Tool Hub
 
-## Project info
+A Blade Runner-inspired platform for discovering and discussing AI tools, featuring a community forum, webinars, and sponsorship opportunities.
 
-**URL**: https://lovable.dev/projects/21e8acea-19b1-4aef-a705-359591bb996a
+## Features
 
-## How can I edit this code?
+- **User Authentication**: Sign up and sign in functionality using Supabase
+- **Community Forum**: Discuss AI tools in a Reddit-style forum
+- **Webinars**: Watch expert-led webinars on AI tools and technologies
+- **Sponsorship**: Promote your AI tools to our community
+- **Responsive Design**: Works on desktop and mobile devices
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Backend**: Supabase (Authentication, Database)
+- **Deployment**: Vercel
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/21e8acea-19b1-4aef-a705-359591bb996a) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v14 or higher)
+- npm or yarn
+- Supabase account
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/cyber-tool-hub.git
+   cd cyber-tool-hub
+   ```
 
-Follow these steps:
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. Create a `.env` file in the root directory with your Supabase credentials:
+   ```
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. Start the development server:
+   ```
+   npm run dev
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+5. Open your browser and navigate to `http://localhost:5173`
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## Project Structure
+
+```
+cyber-tool-hub/
+├── public/              # Static assets
+├── src/                 # Source code
+│   ├── components/      # React components
+│   │   ├── auth/        # Authentication components
+│   │   └── ...          # Other components
+│   ├── contexts/        # React contexts
+│   ├── lib/             # Utility functions and libraries
+│   ├── App.tsx          # Main application component
+│   └── main.tsx         # Entry point
+├── .env                 # Environment variables
+├── package.json         # Dependencies and scripts
+└── README.md            # Project documentation
 ```
 
-**Edit a file directly in GitHub**
+## Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+This project is configured for deployment on Vercel. Simply connect your GitHub repository to Vercel and it will automatically deploy your application.
 
-**Use GitHub Codespaces**
+## Contributing
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## What technologies are used for this project?
+## License
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/21e8acea-19b1-4aef-a705-359591bb996a) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is licensed under the MIT License - see the LICENSE file for details.
