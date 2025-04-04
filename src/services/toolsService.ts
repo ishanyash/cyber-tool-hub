@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 
 export interface Tool {
@@ -78,12 +79,27 @@ export const getToolsByCategory = async (category: string): Promise<Tool[]> => {
   return (data || []).map(mapDbToolToTool);
 };
 
+export const getTool = async (id: string): Promise<Tool> => {
+  const { data, error } = await supabase
+    .from('tools')
+    .select('*')
+    .eq('id', id)
+    .single();
+  
+  if (error) {
+    console.error(`Error fetching tool ${id}:`, error);
+    throw new Error(error.message);
+  }
+  
+  return mapDbToolToTool(data);
+};
+
 export const createTool = async (tool: Omit<Tool, 'id' | 'createdAt' | 'updatedAt'>): Promise<Tool> => {
   const dbTool = mapToolToDbTool(tool);
   
   const { data, error } = await supabase
     .from('tools')
-    .insert(dbTool)
+    .insert([dbTool])
     .select()
     .single();
   

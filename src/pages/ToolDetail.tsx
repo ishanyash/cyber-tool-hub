@@ -2,14 +2,13 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { Tool, mapDbToolToTool } from '@/services/toolsService';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Star, ArrowLeft, ExternalLink, Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
+import { getTool } from '@/services/toolsService';
 
 const ToolDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,17 +18,7 @@ const ToolDetail = () => {
     queryKey: ['tool', id],
     queryFn: async () => {
       if (!id) throw new Error('Tool ID is required');
-      
-      const { data, error } = await supabase
-        .from('tools')
-        .select('*')
-        .eq('id', id)
-        .single();
-      
-      if (error) throw error;
-      if (!data) throw new Error('Tool not found');
-      
-      return mapDbToolToTool(data);
+      return getTool(id);
     }
   });
   
