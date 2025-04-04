@@ -15,6 +15,12 @@ export function SignUpForm() {
     e.preventDefault()
     setError(null)
 
+    // Validate password
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long')
+      return
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match')
       return
@@ -24,10 +30,20 @@ export function SignUpForm() {
 
     try {
       const { error } = await signUp(email, password)
-      if (error) throw error
-      navigate('/dashboard') // Redirect to dashboard after successful sign up
+      if (error) {
+        console.error('SignUp error:', error)
+        if (error.message) {
+          setError(error.message)
+        } else {
+          setError('An error occurred during sign up. Please try again.')
+        }
+        return
+      }
+      // Redirect only if there's no error
+      navigate('/dashboard')
     } catch (error: any) {
-      setError(error.message)
+      console.error('SignUp error:', error)
+      setError(error.message || 'An error occurred during sign up')
     } finally {
       setLoading(false)
     }
@@ -37,7 +53,7 @@ export function SignUpForm() {
     <div className="w-full max-w-md mx-auto p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-300">
             Email
           </label>
           <input
@@ -46,12 +62,12 @@ export function SignUpForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-300">
             Password
           </label>
           <input
@@ -60,12 +76,12 @@ export function SignUpForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300">
             Confirm Password
           </label>
           <input
@@ -74,12 +90,12 @@ export function SignUpForm() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
         </div>
 
         {error && (
-          <div className="text-red-500 text-sm">{error}</div>
+          <div className="text-red-500 text-sm bg-red-950 p-2 rounded">{error}</div>
         )}
 
         <button

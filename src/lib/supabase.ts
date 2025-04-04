@@ -11,15 +11,35 @@ if (!supabaseUrl || !supabaseAnonKey) {
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Auth helper functions
-export const signUp = async (email: string, password: string, metadata?: { username?: string; full_name?: string }) => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: metadata
+export const signUp = async (email: string, password: string) => {
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          username: email.split('@')[0], // Create a default username from email
+          full_name: '',
+        }
+      }
+    })
+    
+    if (error) {
+      console.error('Signup error:', error)
+      return { error }
     }
-  })
-  return { data, error }
+
+    // Check if the user was created successfully
+    if (!data.user) {
+      console.error('No user data returned')
+      return { error: new Error('No user data returned') }
+    }
+
+    return { data, error: null }
+  } catch (err) {
+    console.error('Signup error:', err)
+    return { error: err }
+  }
 }
 
 export const signIn = async (email: string, password: string) => {
