@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthContext'
+import { SupabaseProvider } from './contexts/SupabaseContext'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { SignInForm } from './components/auth/SignInForm'
 import { SignUpForm } from './components/auth/SignUpForm'
@@ -12,7 +12,7 @@ import { Sponsorship } from './components/Sponsorship'
 
 function App() {
   return (
-    <AuthProvider>
+    <SupabaseProvider>
       <Router>
         <div className="min-h-screen bg-gray-900 text-white">
           <Navbar />
@@ -37,7 +37,7 @@ function App() {
           </main>
         </div>
       </Router>
-    </AuthProvider>
+    </SupabaseProvider>
   )
 }
 
