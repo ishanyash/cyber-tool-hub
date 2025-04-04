@@ -1,11 +1,8 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
-
 const SponsorshipBanner = () => {
-  return (
-    <div className="w-full relative overflow-hidden py-10 my-16">
+  return <div className="w-full relative overflow-hidden py-10 my-16">
       {/* Enhanced animated gradient border effect */}
       <div className="absolute inset-0 bg-gradient-glow bg-[length:200%_100%] animate-data-flow opacity-80"></div>
       
@@ -18,9 +15,7 @@ const SponsorshipBanner = () => {
         <div className="container mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between relative">
           {/* Stylized icon */}
           <div className="absolute -left-2 top-1/2 -translate-y-1/2 hidden lg:block">
-            <div className="w-16 h-16 rounded-full bg-cyber-neon-pink animate-pulse flex items-center justify-center">
-              <AlertCircle className="w-8 h-8 text-cyber-dark" />
-            </div>
+            
           </div>
           
           <div className="mb-6 md:mb-0 relative">
@@ -47,8 +42,6 @@ const SponsorshipBanner = () => {
       <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-cyber-neon-pink"></div>
       <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-cyber-neon-pink"></div>
       <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-cyber-neon-pink"></div>
-    </div>
-  );
+    </div>;
 };
-
 export default SponsorshipBanner;
