@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Forum from "./pages/Forum";
 import Tools from "./pages/Tools";
+import ToolDetail from "./pages/ToolDetail";
 import Webinars from "./pages/Webinars";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/forum" element={<Forum />} />
             <Route path="/tools" element={<Tools />} />
+            <Route path="/tool/:id" element={<ToolDetail />} />
             <Route path="/webinars" element={<Webinars />} />
             <Route path="/about" element={<About />} />
             <Route path="/auth" element={<Auth />} />

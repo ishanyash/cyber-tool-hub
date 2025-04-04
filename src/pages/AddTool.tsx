@@ -71,7 +71,17 @@ const AddTool = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: createTool,
+    mutationFn: (data: FormValues) => {
+      // Ensure all required fields have values
+      return createTool({
+        name: data.name,
+        description: data.description,
+        imageUrl: data.imageUrl,
+        category: data.category,
+        rating: data.rating,
+        isPaid: data.isPaid
+      });
+    },
     onSuccess: () => {
       toast({
         title: "Tool Added",

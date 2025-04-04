@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Heart, ExternalLink, Star } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
@@ -72,9 +73,11 @@ const ToolCard = ({ id, name, description, imageUrl, category, rating, isPaid }:
             <span className="ml-2 text-sm text-gray-400">{rating.toFixed(1)}</span>
           </div>
           
-          <Button size="sm" variant="ghost" className="text-cyber-neon-blue hover:text-white">
-            View <ExternalLink className="ml-1 h-3 w-3" />
-          </Button>
+          <Link to={`/tool/${id}`}>
+            <Button size="sm" variant="ghost" className="text-cyber-neon-blue hover:text-white">
+              View <ExternalLink className="ml-1 h-3 w-3" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

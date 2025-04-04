@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 
 export interface Tool {
@@ -13,25 +12,48 @@ export interface Tool {
   updatedAt?: string;
 }
 
+// Map database snake_case to camelCase
+export const mapDbToolToTool = (dbTool: any): Tool => ({
+  id: dbTool.id,
+  name: dbTool.name,
+  description: dbTool.description,
+  imageUrl: dbTool.image_url,
+  category: dbTool.category,
+  rating: dbTool.rating,
+  isPaid: dbTool.is_paid,
+  createdAt: dbTool.created_at,
+  updatedAt: dbTool.updated_at
+});
+
+// Map camelCase to database snake_case
+const mapToolToDbTool = (tool: Omit<Tool, 'id' | 'createdAt' | 'updatedAt'>) => ({
+  name: tool.name,
+  description: tool.description,
+  image_url: tool.imageUrl,
+  category: tool.category,
+  rating: tool.rating,
+  is_paid: tool.isPaid
+});
+
 export const getTools = async (): Promise<Tool[]> => {
   const { data, error } = await supabase
     .from('tools')
     .select('*')
-    .order('createdAt', { ascending: false });
+    .order('created_at', { ascending: false });
   
   if (error) {
     console.error("Error fetching tools:", error);
     throw new Error(error.message);
   }
   
-  return data || [];
+  return (data || []).map(mapDbToolToTool);
 };
 
 export const getFeaturedTools = async (): Promise<Tool[]> => {
   const { data, error } = await supabase
     .from('tools')
     .select('*')
-    .eq('isFeatured', true)
+    .eq('is_featured', true)
     .limit(6);
   
   if (error) {
@@ -39,7 +61,7 @@ export const getFeaturedTools = async (): Promise<Tool[]> => {
     throw new Error(error.message);
   }
   
-  return data || [];
+  return (data || []).map(mapDbToolToTool);
 };
 
 export const getToolsByCategory = async (category: string): Promise<Tool[]> => {
@@ -53,13 +75,15 @@ export const getToolsByCategory = async (category: string): Promise<Tool[]> => {
     throw new Error(error.message);
   }
   
-  return data || [];
+  return (data || []).map(mapDbToolToTool);
 };
 
 export const createTool = async (tool: Omit<Tool, 'id' | 'createdAt' | 'updatedAt'>): Promise<Tool> => {
+  const dbTool = mapToolToDbTool(tool);
+  
   const { data, error } = await supabase
     .from('tools')
-    .insert(tool)
+    .insert(dbTool)
     .select()
     .single();
   
@@ -68,13 +92,22 @@ export const createTool = async (tool: Omit<Tool, 'id' | 'createdAt' | 'updatedA
     throw new Error(error.message);
   }
   
-  return data;
+  return mapDbToolToTool(data);
 };
 
 export const updateTool = async (id: string, updates: Partial<Tool>): Promise<Tool> => {
+  // Convert camelCase to snake_case for db fields
+  const dbUpdates: any = {};
+  if (updates.name) dbUpdates.name = updates.name;
+  if (updates.description) dbUpdates.description = updates.description;
+  if (updates.imageUrl) dbUpdates.image_url = updates.imageUrl;
+  if (updates.category) dbUpdates.category = updates.category;
+  if (updates.rating !== undefined) dbUpdates.rating = updates.rating;
+  if (updates.isPaid !== undefined) dbUpdates.is_paid = updates.isPaid;
+  
   const { data, error } = await supabase
     .from('tools')
-    .update(updates)
+    .update(dbUpdates)
     .eq('id', id)
     .select()
     .single();
@@ -84,7 +117,7 @@ export const updateTool = async (id: string, updates: Partial<Tool>): Promise<To
     throw new Error(error.message);
   }
   
-  return data;
+  return mapDbToolToTool(data);
 };
 
 export const deleteTool = async (id: string): Promise<void> => {
