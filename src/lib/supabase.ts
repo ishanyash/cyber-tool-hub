@@ -1,25 +1,9 @@
-import { createClient } from '@supabase/supabase-js'
+
+import { supabase } from '../integrations/supabase/client'
 import type { UserProfile, Tool, ToolRating, ForumCategory, ForumPost, ForumComment } from '../types/database.types'
 
-// Log environment variables (without revealing full key)
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
-
-console.log('Supabase URL:', supabaseUrl)
-console.log('Supabase Key Available:', !!supabaseAnonKey)
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables')
-  throw new Error('Missing Supabase environment variables')
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  }
-})
+// Export the supabase client directly from the integrations folder
+export { supabase }
 
 // Debug auth state
 supabase.auth.onAuthStateChange((event, session) => {

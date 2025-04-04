@@ -1,5 +1,6 @@
+
 import { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext'
+import { useSupabase } from '../contexts/SupabaseContext'
 
 // Mock data for forum topics
 const mockTopics = [
@@ -42,7 +43,7 @@ const mockTopics = [
 ]
 
 export function Forum() {
-  const { user } = useAuth()
+  const { user } = useSupabase()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
 
@@ -124,4 +125,4 @@ export function Forum() {
       </div>
     </div>
   )
-} 
+}

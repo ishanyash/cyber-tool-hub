@@ -1,6 +1,7 @@
+
 import { createContext, useContext, useEffect, useState } from 'react'
 import { User } from '@supabase/supabase-js'
-import { supabase } from '../lib/supabase'
+import { supabase } from '../integrations/supabase/client'
 
 interface SupabaseContextType {
   user: User | null
@@ -155,4 +156,4 @@ export function useSupabase() {
     throw new Error('useSupabase must be used within a SupabaseProvider')
   }
   return context
-} 
+}
