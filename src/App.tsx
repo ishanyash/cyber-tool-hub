@@ -9,6 +9,7 @@ import { Home } from './components/Home'
 import { Forum } from './components/Forum'
 import { Webinars } from './components/Webinars'
 import { Sponsorship } from './components/Sponsorship'
+import { TestSupabase } from './pages/TestSupabase'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/signin" element={<SignInForm />} />
               <Route path="/signup" element={<SignUpForm />} />
+              <Route path="/test-supabase" element={<TestSupabase />} />
               <Route 
                 path="/dashboard" 
                 element={

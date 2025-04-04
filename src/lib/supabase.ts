@@ -1,25 +1,42 @@
 import { createClient } from '@supabase/supabase-js'
 import type { UserProfile, Tool, ToolRating, ForumCategory, ForumPost, ForumComment } from '../types/database.types'
 
+// Log environment variables (without revealing full key)
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
+console.log('Supabase URL:', supabaseUrl)
+console.log('Supabase Key Available:', !!supabaseAnonKey)
+
 if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Missing Supabase environment variables')
   throw new Error('Missing Supabase environment variables')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true
+  }
+})
+
+// Debug auth state
+supabase.auth.onAuthStateChange((event, session) => {
+  console.log('Supabase Auth Event:', event, session ? 'Session exists' : 'No session')
+})
 
 // Auth helper functions
 export const signUp = async (email: string, password: string) => {
   try {
+    console.log('Signing up with email:', email)
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           username: email.split('@')[0], // Create a default username from email
-          full_name: '',
+          avatar_url: null
         }
       }
     })
@@ -35,6 +52,7 @@ export const signUp = async (email: string, password: string) => {
       return { error: new Error('No user data returned') }
     }
 
+    console.log('Signup successful, user created:', data.user.id)
     return { data, error: null }
   } catch (err) {
     console.error('Signup error:', err)
@@ -77,7 +95,7 @@ export const signInWithGoogle = async () => {
 // Profile helper functions
 export const getUserProfile = async (userId: string) => {
   const { data, error } = await supabase
-    .from('user_profiles')
+    .from('profiles')
     .select('*')
     .eq('id', userId)
     .single()
@@ -86,7 +104,7 @@ export const getUserProfile = async (userId: string) => {
 
 export const updateUserProfile = async (userId: string, updates: Partial<UserProfile>) => {
   const { data, error } = await supabase
-    .from('user_profiles')
+    .from('profiles')
     .update(updates)
     .eq('id', userId)
     .select()

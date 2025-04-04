@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from "@/components/ui/button";
-import { useAuth } from '@/contexts/AuthContext';
+import { Button } from "../components/ui/button";
+import { useSupabase } from '../contexts/SupabaseContext';
 
 const NavbarAuthButtons = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useSupabase();
 
   if (user) {
     return (
@@ -26,15 +25,26 @@ const NavbarAuthButtons = () => {
   }
 
   return (
-    <Link to="/auth">
-      <Button 
-        variant="ghost" 
-        size="sm" 
-        className="text-cyber-neon-blue hover:text-white hover:bg-cyber-neon-blue/20"
-      >
-        Login / Signup
-      </Button>
-    </Link>
+    <div className="flex items-center gap-2">
+      <Link to="/signin">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-cyber-neon-blue hover:text-white hover:bg-cyber-neon-blue/20"
+        >
+          Login
+        </Button>
+      </Link>
+      <Link to="/signup">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-cyber-neon-pink hover:text-white hover:bg-cyber-neon-pink/20"
+        >
+          Signup
+        </Button>
+      </Link>
+    </div>
   );
 };
 

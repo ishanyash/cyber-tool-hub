@@ -8,6 +8,7 @@ interface SupabaseContextType {
   userProfile: any | null
   signInWithEmail: (email: string, password: string) => Promise<{ error: any }>
   signInWithGoogle: () => Promise<{ error: any }>
+  signUp: (email: string, password: string) => Promise<{ error: any }>
   signOut: () => Promise<{ error: any }>
 }
 
@@ -60,16 +61,49 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
+      // Get the current origin with fallback
+      const redirectUrl = import.meta.env.VITE_SITE_URL || window.location.origin
+      console.log('Google sign-in redirect URL:', redirectUrl)
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
+          redirectTo: `${redirectUrl}/dashboard`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
+        }
+      })
+      if (error) {
+        console.error('Google sign-in error:', error)
+        throw error
+      }
+      console.log('Google sign-in initiated, URL:', data?.url)
+      return { error: null }
+    } catch (error) {
+      console.error('Google sign in error:', error)
+      return { error }
+    }
+  }
+
+  const signUp = async (email: string, password: string) => {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username: email.split('@')[0], // Create a default username from email
+            avatar_url: null
+          },
+          emailRedirectTo: `${window.location.origin}/dashboard`
         }
       })
       if (error) throw error
       return { error: null }
     } catch (error) {
-      console.error('Google sign in error:', error)
+      console.error('Sign up error:', error)
       return { error }
     }
   }
@@ -88,7 +122,7 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
   const fetchUserProfile = async (userId: string) => {
     try {
       const { data, error } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .select('*')
         .eq('id', userId)
         .single()
@@ -107,6 +141,7 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
       userProfile,
       signInWithEmail,
       signInWithGoogle,
+      signUp,
       signOut
     }}>
       {children}

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { Search, Menu, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import NavbarAuthButtons from './NavbarAuthButtons';
-import { useAuth } from '../contexts/AuthContext'
+import { useSupabase } from '../contexts/SupabaseContext'
 
 const Navbar = () => {
-  const { user, signOut } = useAuth()
+  const { user, signOut } = useSupabase()
 
   const handleSignOut = async () => {
     await signOut()

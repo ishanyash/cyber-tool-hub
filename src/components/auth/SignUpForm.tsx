@@ -1,20 +1,21 @@
 import { useState } from 'react'
-import { useAuth } from '../../contexts/AuthContext'
+import { useSupabase } from '../../contexts/SupabaseContext'
 import { useNavigate } from 'react-router-dom'
-import { signInWithGoogle } from '../../lib/supabase'
 
 export function SignUpForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const { signUp } = useAuth()
+  const { signInWithGoogle, signUp } = useSupabase()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+    setSuccess(null)
 
     // Validate password
     if (password.length < 6) {
@@ -33,15 +34,14 @@ export function SignUpForm() {
       const { error } = await signUp(email, password)
       if (error) {
         console.error('SignUp error:', error)
-        if (error.message) {
-          setError(error.message)
-        } else {
-          setError('An error occurred during sign up. Please try again.')
-        }
+        setError(error.message || 'An error occurred during sign up')
         return
       }
-      // Redirect only if there's no error
-      navigate('/dashboard')
+      
+      // Show success message instead of redirecting immediately
+      setSuccess('Success! Please check your email to confirm your account.')
+      // Don't navigate since we're waiting for email confirmation
+      // navigate('/dashboard')
     } catch (error: any) {
       console.error('SignUp error:', error)
       setError(error.message || 'An error occurred during sign up')
@@ -52,6 +52,7 @@ export function SignUpForm() {
 
   const handleGoogleSignIn = async () => {
     setError(null)
+    setSuccess(null)
     setLoading(true)
     try {
       const { error } = await signInWithGoogle()
@@ -151,6 +152,10 @@ export function SignUpForm() {
 
         {error && (
           <div className="text-red-500 text-sm bg-red-950 p-2 rounded">{error}</div>
+        )}
+        
+        {success && (
+          <div className="text-green-500 text-sm bg-green-950 p-2 rounded">{success}</div>
         )}
 
         <button
